@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uflo-process name="请假流程">
+  <start g="7,8,68,60" name="填写请假单">
+    <sequence-flow to="部门经理审批"/>
+  </start>
+  <task g="169,156,134,55" allow-specify-assignee="false" task-type="Normal" assignment-type="ProcessPromoter" name="董事审批">
+    <sequence-flow to="行政内勤确认"/>
+  </task>
+  <decision expression="${dayCount&gt;3?&quot;大于3天&quot;:&quot;小于等于3天&quot;}" g="379,10,95,60" name="判断请假天数" decision-type="Expression">
+    <sequence-flow to="董事审批" g="-40,-9" name="大于3天"/>
+    <sequence-flow to="行政内勤确认" g="-40,-9" name="小于等于3天"/>
+  </decision>
+  <task g="536,140,148,55" allow-specify-assignee="false" task-type="Normal" assignment-type="ProcessPromoter" name="行政内勤确认">
+    <sequence-flow to="请假结束"/>
+  </task>
+  <end g="575,284,84,60" terminate="true" name="请假结束"/>
+  <task g="168,12,120,55" allow-specify-assignee="false" task-type="Normal" assignment-type="ProcessPromoter" name="部门经理审批">
+    <sequence-flow to="判断请假天数"/>
+  </task>
+</uflo-process>
